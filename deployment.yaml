@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: todo-app
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pib-todo-app
+  template:
+    metadata:
+      labels:
+        app: pib-todo-app
+    spec:
+      containers:
+      - name: pib-todo-app
+        image: pib21/todo-app:v0.1.0
+        imagePullPolicy: IfNotPresent
+        env:
+          - name: PORT
+            value: "5000"
+        ports:
+          - containerPort: 5000
+        resources:
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+          requests:
+            memory: "64Mi"
+            cpu: "100m"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: todo-app
+spec:
+  type: LoadBalancer
+  selector:
+    app: pib-todo-app
+  ports:
+    - protocol: TCP
+      port: 5000
+      targetPort: 5000

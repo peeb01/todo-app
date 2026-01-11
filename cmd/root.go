@@ -11,7 +11,7 @@ var rootCmd = &cobra.Command{
 	Short: "Todo App CLI",
 	Long:  "Todo App CLI",
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("Hello From TODO App")
+		fmt.Println("run command: go run main.go serve")
 	},
 }
 
